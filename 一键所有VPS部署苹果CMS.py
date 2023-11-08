@@ -151,7 +151,7 @@ def update_server(name, hostname, port, username, password, domain):
         print()
 
         print(f"{name} 下载电影先生2.0模板")
-        stdin, stdout, stderr = client.exec_command('./docker/web/html/template/ && wget https://github.com/kejilion/Website_source_code/raw/main/DYXS2.zip && unzip DYXS2.zip && rm /home/web/html/template/DYXS2.zip && ./docker/web/html/template/DYXS2/asset/admin/Dyxs2.php ./docker/web/html/application/admin/controller && ./docker/web/html/template/DYXS2/asset/admin/dycms.html ./docker/web/html/application/admin/view/system')
+        stdin, stdout, stderr = client.exec_command('./docker/web/html/template/ && wget https://github.com/kejilion/Website_source_code/raw/main/DYXS2.zip && unzip DYXS2.zip && rm ./docker/web/html/template/DYXS2.zip && ./docker/web/html/template/DYXS2/asset/admin/Dyxs2.php ./docker/web/html/application/admin/controller && ./docker/web/html/template/DYXS2/asset/admin/dycms.html ./docker/web/html/application/admin/view/system')
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
                 print(stdout.channel.recv(1024).decode(), end="")
@@ -179,7 +179,7 @@ def update_server(name, hostname, port, username, password, domain):
         print()
 
         print(f"{name} 启动环境")
-        stdin, stdout, stderr = client.exec_command('./docker/web && docker-compose up -d')
+        stdin, stdout, stderr = client.exec_command('cd docker/web && docker-compose up -d')
         print(f"启动中:")
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
