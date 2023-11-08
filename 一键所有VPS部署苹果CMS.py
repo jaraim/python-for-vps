@@ -66,7 +66,7 @@ def update_server(name, hostname, port, username, password, domain):
 
 
         print(f"{name} 创建web目录")
-        stdin, stdout, stderr = client.exec_command("cd /root/docker && mkdir -p web/html web/mysql web/certs && touch web/nginx.conf web/docker-compose.yml")
+        stdin, stdout, stderr = client.exec_command("mkdir -p /root/docker/web/html /root/docker/web/mysql /root/docker/web/certs && touch /root/docker/web/nginx.conf /root/docker/web/docker-compose.yml")
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
                 print(stdout.channel.recv(1024).decode(), end="")
