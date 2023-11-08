@@ -2,9 +2,8 @@ import paramiko
 
 servers = [
 
-    {"name": "美国", "hostname": "1.1.1.1", "port": 22, "username": "root", "password": "123456", "domain": "yuming.com"},   
-    {"name": "不丹", "hostname": "1.1.1.1", "port": 22, "username": "root", "password": "123456", "domain": "yuming.com"},   
-    {"name": "毛里求斯", "hostname": "1.1.1.1", "port": 22, "username": "root", "password": "123456", "domain": "yuming.com"},   
+    {"name": "美国", "hostname": "104.194.74.122", "port": 104.194.74.122, "username": "root", "password": "MrqXv5c8b6Qa", "domain": "ph.jaraim.top"},   
+     
     # 添加更多服务器
 
 ]
@@ -110,7 +109,7 @@ def update_server(name, hostname, port, username, password, domain):
         print()        
 
         print(f"{name} 配置nginx")
-        stdin, stdout, stderr = client.exec_command('wget -O /home/web/nginx.conf https://raw.githubusercontent.com/kejilion/nginx/main/nginx6.conf && sed -i "s/yuming.com/' + domain + '/g" /home/web/nginx.conf')
+        stdin, stdout, stderr = client.exec_command('wget -O /home/web/nginx.conf https://raw.githubusercontent.com/kejilion/nginx/main/nginx6.conf && sed -i "s/ph.jaraim.top/' + domain + '/g" /home/web/nginx.conf')
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
                 print(stdout.channel.recv(1024).decode(), end="")
