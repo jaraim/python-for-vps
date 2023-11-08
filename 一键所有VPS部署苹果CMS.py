@@ -109,7 +109,7 @@ def update_server(name, hostname, port, username, password, domain):
         print()        
 
         print(f"{name} 配置nginx")
-        stdin, stdout, stderr = client.exec_command('wget -O /root/docker/web/nginx.conf https://raw.githubusercontent.com/kejilion/nginx/main/nginx6.conf && sed -i "s/ph.jaraim.top/' + domain + '/g" /root/docker/web/nginx.conf')
+        stdin, stdout, stderr = client.exec_command('wget -O /root/docker/web/nginx.conf https://raw.githubusercontent.com/jaraim/My-project/main/docker/nginx/nginx.conf && sed -i "s/ph.jaraim.top/' + domain + '/g" /root/docker/web/nginx.conf')
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
                 print(stdout.channel.recv(1024).decode(), end="")
