@@ -2,8 +2,9 @@ import paramiko
 
 servers = [
 
-    {"name": "美国", "hostname": "104.194.74.122", "port": 26704, "username": "root", "password": "MrqXv5c8b6Qa", "domain": "ph.jaraim.top"},   
-      
+    {"name": "美国", "hostname": "1.1.1.1", "port": 22, "username": "root", "password": "123456", "domain": "yuming.com"},   
+    {"name": "不丹", "hostname": "1.1.1.1", "port": 22, "username": "root", "password": "123456", "domain": "yuming.com"},   
+    {"name": "毛里求斯", "hostname": "1.1.1.1", "port": 22, "username": "root", "password": "123456", "domain": "yuming.com"},   
     # 添加更多服务器
 
 ]
@@ -66,7 +67,7 @@ def update_server(name, hostname, port, username, password, domain):
 
 
         print(f"{name} 创建web目录")
-        stdin, stdout, stderr = client.exec_command("mkdir -p /root/docker/web/html /root/docker/web/mysql /root/docker/web/certs && touch /root/docker/web/nginx.conf /root/docker/web/docker-compose.yml")
+        stdin, stdout, stderr = client.exec_command("cd /home && mkdir -p web/html web/mysql web/certs && touch web/nginx.conf web/docker-compose.yml")
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
                 print(stdout.channel.recv(1024).decode(), end="")
@@ -95,7 +96,7 @@ def update_server(name, hostname, port, username, password, domain):
         print()
 
         print(f"{name} 下载证书")
-        stdin, stdout, stderr = client.exec_command("~/.acme.sh/acme.sh --installcert -d {} --key-file /root/docker/web/certs/key.pem --fullchain-file /root/docker/web/certs/cert.pem".format(domain))
+        stdin, stdout, stderr = client.exec_command("~/.acme.sh/acme.sh --installcert -d {} --key-file /home/web/certs/key.pem --fullchain-file /home/web/certs/cert.pem".format(domain))
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
                 print(stdout.channel.recv(1024).decode(), end="")
@@ -109,7 +110,7 @@ def update_server(name, hostname, port, username, password, domain):
         print()        
 
         print(f"{name} 配置nginx")
-        stdin, stdout, stderr = client.exec_command('wget -O /root/docker/web/nginx.conf https://raw.githubusercontent.com/jaraim/My-project/main/docker/nginx/nginx.conf && sed -i "s/ph.jaraim.top/' + domain + '/g" /root/docker/web/nginx.conf')
+        stdin, stdout, stderr = client.exec_command('wget -O /home/web/nginx.conf https://raw.githubusercontent.com/kejilion/nginx/main/nginx6.conf && sed -i "s/yuming.com/' + domain + '/g" /home/web/nginx.conf')
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
                 print(stdout.channel.recv(1024).decode(), end="")
@@ -123,7 +124,7 @@ def update_server(name, hostname, port, username, password, domain):
         print()
 
         print(f"{name} 配置docker-compose.yml")
-        stdin, stdout, stderr = client.exec_command('wget -O /root/docker/web/docker-compose.yml https://raw.githubusercontent.com/jaraim/My-project/main/docker/cms/compose.yml')
+        stdin, stdout, stderr = client.exec_command('wget -O /home/web/docker-compose.yml https://raw.githubusercontent.com/jaraim/My-project/main/docker/cms/compose.yml')
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
                 print(stdout.channel.recv(1024).decode(), end="")
@@ -137,7 +138,7 @@ def update_server(name, hostname, port, username, password, domain):
         print()
 
         print(f"{name} 下载网站源码-苹果CMS")
-        stdin, stdout, stderr = client.exec_command('cd /root/docker/web && wget https://github.com/magicblack/maccms_down/raw/master/maccms10.zip && sudo apt-get install -y unzip && unzip maccms10.zip -d html && rm maccms10.zip && mv /root/docker/web/html/maccms10-master/* /root/docker/web/html/')
+        stdin, stdout, stderr = client.exec_command('cd /home/web && wget https://github.com/magicblack/maccms_down/raw/master/maccms10.zip && sudo apt-get install -y unzip && unzip maccms10.zip -d html && rm maccms10.zip && mv /home/web/html/maccms10-master/* /home/web/html/')
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
                 print(stdout.channel.recv(1024).decode(), end="")
@@ -151,7 +152,7 @@ def update_server(name, hostname, port, username, password, domain):
         print()
 
         print(f"{name} 下载电影先生2.0模板")
-        stdin, stdout, stderr = client.exec_command('cd /root/docker/web/html/template/ && wget https://github.com/kejilion/Website_source_code/raw/main/DYXS2.zip && unzip DYXS2.zip && rm /root/docker/web/html/template/DYXS2.zip && cp /root/docker/web/html/template/DYXS2/asset/admin/Dyxs2.php /root/docker/web/html/application/admin/controller && cp /root/docker/web/html/template/DYXS2/asset/admin/dycms.html /root/docker/web/html/application/admin/view/system')
+        stdin, stdout, stderr = client.exec_command('cd /home/web/html/template/ && wget https://github.com/kejilion/Website_source_code/raw/main/DYXS2.zip && unzip DYXS2.zip && rm /home/web/html/template/DYXS2.zip && cp /home/web/html/template/DYXS2/asset/admin/Dyxs2.php /home/web/html/application/admin/controller && cp /home/web/html/template/DYXS2/asset/admin/dycms.html /home/web/html/application/admin/view/system')
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
                 print(stdout.channel.recv(1024).decode(), end="")
@@ -165,7 +166,7 @@ def update_server(name, hostname, port, username, password, domain):
         print()
 
         print(f"{name} 修改后台入口文件名为vip.php")
-        stdin, stdout, stderr = client.exec_command('mv /root/docker/web/html/admin.php /root/docker/web/html/vip.php && wget -O /root/docker/web/html/application/extra/maccms.php https://raw.githubusercontent.com/kejilion/Website_source_code/main/maccms.php')
+        stdin, stdout, stderr = client.exec_command('mv /home/web/html/admin.php /home/web/html/vip.php && wget -O /home/web/html/application/extra/maccms.php https://raw.githubusercontent.com/kejilion/Website_source_code/main/maccms.php')
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
                 print(stdout.channel.recv(1024).decode(), end="")
@@ -179,7 +180,7 @@ def update_server(name, hostname, port, username, password, domain):
         print()
 
         print(f"{name} 启动环境")
-        stdin, stdout, stderr = client.exec_command('cd /root/docker/web && docker-compose up -d')
+        stdin, stdout, stderr = client.exec_command('cd /home/web && docker-compose up -d')
         print(f"启动中:")
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
@@ -247,3 +248,4 @@ for server in servers:
 
 # 等待用户按下任意键后关闭窗口
 input("按任意键关闭窗口...")
+
