@@ -109,7 +109,7 @@ def update_server(name, hostname, port, username, password, domain):
         print()        
 
         print(f"{name} 配置nginx")
-        stdin, stdout, stderr = client.exec_command('wget -O ./docker/web/nginx.conf https://raw.githubusercontent.com/jaraim/My-project/main/docker/nginx/nginx.conf && sed -i "s/ph.jaraim.top/' + domain + '/g" /home/web/nginx.conf')
+        stdin, stdout, stderr = client.exec_command('wget -O ./docker/web/nginx.conf https://raw.githubusercontent.com/jaraim/My-project/main/docker/nginx/nginx.conf && sed -i "s/ph.jaraim.top/' + domain + '/g" ./docker/web/nginx.conf')
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
                 print(stdout.channel.recv(1024).decode(), end="")
@@ -137,7 +137,7 @@ def update_server(name, hostname, port, username, password, domain):
         print()
 
         print(f"{name} 下载网站源码-苹果CMS")
-        stdin, stdout, stderr = client.exec_command('./docker/web && wget https://github.com/magicblack/maccms_down/raw/master/maccms10.zip && sudo apt-get install -y unzip && unzip maccms10.zip -d html && rm maccms10.zip && mv /home/web/html/maccms10-master/* /home/web/html/')
+        stdin, stdout, stderr = client.exec_command('./docker/web && wget https://github.com/magicblack/maccms_down/raw/master/maccms10.zip && sudo apt-get install -y unzip && unzip maccms10.zip -d html && rm maccms10.zip && ./docker/web/html/maccms10-master/* ./docker/web/html/')
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
                 print(stdout.channel.recv(1024).decode(), end="")
@@ -151,7 +151,7 @@ def update_server(name, hostname, port, username, password, domain):
         print()
 
         print(f"{name} 下载电影先生2.0模板")
-        stdin, stdout, stderr = client.exec_command('./docker/web/html/template/ && wget https://github.com/kejilion/Website_source_code/raw/main/DYXS2.zip && unzip DYXS2.zip && rm /home/web/html/template/DYXS2.zip && cp /home/web/html/template/DYXS2/asset/admin/Dyxs2.php /home/web/html/application/admin/controller && cp /home/web/html/template/DYXS2/asset/admin/dycms.html /home/web/html/application/admin/view/system')
+        stdin, stdout, stderr = client.exec_command('./docker/web/html/template/ && wget https://github.com/kejilion/Website_source_code/raw/main/DYXS2.zip && unzip DYXS2.zip && rm /home/web/html/template/DYXS2.zip && ./docker/web/html/template/DYXS2/asset/admin/Dyxs2.php ./docker/web/html/application/admin/controller && ./docker/web/html/template/DYXS2/asset/admin/dycms.html ./docker/web/html/application/admin/view/system')
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
                 print(stdout.channel.recv(1024).decode(), end="")
