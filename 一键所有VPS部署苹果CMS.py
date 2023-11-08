@@ -165,7 +165,7 @@ def update_server(name, hostname, port, username, password, domain):
         print()
 
         print(f"{name} 修改后台入口文件名为vip.php")
-        stdin, stdout, stderr = client.exec_command('./docker/web/html/admin.php ./docker/web/html/vip.php && wget -O ./docker/web/html/application/extra/maccms.php https://raw.githubusercontent.com/kejilion/Website_source_code/main/maccms.php')
+        stdin, stdout, stderr = client.exec_command('mv /root/docker/web/html/admin.php /root/docker/web/html/vip.php && wget -O /root/docker/web/html/application/extra/maccms.php https://raw.githubusercontent.com/kejilion/Website_source_code/main/maccms.php')
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
                 print(stdout.channel.recv(1024).decode(), end="")
