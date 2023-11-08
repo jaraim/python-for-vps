@@ -2,7 +2,7 @@ import paramiko
 
 servers = [
 
-    {"name": "美国", "hostname": "104.194.74.122", "port": 28568, "username": "root", "password": "CThdYrDvKcuZ", "domain": "ph.jaraim.top"},   
+    {"name": "美国", "hostname": "104.194.74.122", "port": 26704, "username": "root", "password": "uHUUAp1DsQaK", "domain": "ph.jaraim.top"},   
       
     # 添加更多服务器
 
