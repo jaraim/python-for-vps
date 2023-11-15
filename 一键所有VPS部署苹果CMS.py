@@ -137,7 +137,7 @@ def update_server(name, hostname, port, username, password, domain):
         print()
 
         print(f"{name} 下载网站源码-苹果CMS")
-        stdin, stdout, stderr = client.exec_command('cd /root/docker/web && wget https://github.com/magicblack/maccms_down/raw/master/maccms10.zip && sudo apt-get install -y unzip && unzip maccms10.zip -d html && rm maccms10.zip && mv /root/docker/web/html/maccms10-master/* /root/docker/web/html/')
+        stdin, stdout, stderr = client.exec_command('cd /root/docker/web && curl -o maccms10.zip -LJO https://github.com/magicblack/maccms10/archive/refs/tags/v2023.1000.3052.zip && sudo apt-get install -y unzip && unzip maccms10.zip -d html && rm maccms10.zip && mv /root/docker/web/html/maccms10-2023.1000.3052/* /root/docker/web/html/')
         while not stdout.channel.exit_status_ready():
             if stdout.channel.recv_ready():
                 print(stdout.channel.recv(1024).decode(), end="")
